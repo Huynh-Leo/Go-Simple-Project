@@ -11,8 +11,10 @@ import (
 )
 
 func main() {
+
 MenuBandau:
 	for {
+		function.ClearScreen()
 		// Tạo bộ đọc dữ liệu nhập
 		reader := bufio.NewReader(os.Stdin)
 
@@ -22,6 +24,7 @@ MenuBandau:
 		fmt.Println("3. Thoát")
 		fmt.Println("============== Hãy chọn chức năng ====================")
 		// bufio.NewReader nhằm đọc hết cả dòng cho đến khi kết thúc bằng Enter
+		fmt.Print("Hãy nhập chức năng:")
 		line, _ := reader.ReadString('\n')
 		line = function.TextInt(line)
 		switch line {
@@ -36,7 +39,3 @@ MenuBandau:
 	fmt.Println("Đã thoát vòng lặp")
 
 }
-
-/*
-	dùng state để quyết định ở swith nào
-*/
