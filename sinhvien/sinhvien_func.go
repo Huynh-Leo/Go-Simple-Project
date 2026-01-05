@@ -9,9 +9,51 @@ import (
 	function "gapp.go/Function"
 )
 
+var danhSachSV []SinhVien
+
+func AddSinhVien() {
+	reader := bufio.NewReader(os.Stdin)
+
+	// fmt.Print("Hãy nhập Id của sinh viên:")
+	// lineId, _ := reader.ReadString('\n')
+	// lineId = function.TextInt(lineId)
+
+	// Đặt tên biến nhập
+	var lineName string
+	for {
+		fmt.Print("Hãy nhập Tên của sinh viên: ")
+		// Đọc tất cả dữ liệu nhập cho đến khi Enter
+		lineName, _ = reader.ReadString('\n')
+		// Nếu giá trị trả về là true thì sẽ break
+		// lúc đó dữ liệu sẽ được ghi vào biến
+		if function.TextStringName(lineName) {
+			break
+		}
+		fmt.Println("❌ Tên không hợp lệ, vui lòng nhập lại!")
+	}
+
+	fmt.Print("Hãy nhập Năm của sinh viên:")
+	lineYear, _ := reader.ReadString('\n')
+	// lineYear = function.TextStringName(lineYear)
+
+	fmt.Print("Hãy nhập lớp của sinh viên:")
+	lineGrade, _ := reader.ReadString('\n')
+
+	// Convert từ string sang lại int
+	id, _ := strconv.Atoi(lineId)
+	year, _ := strconv.Atoi(lineYear)
+
+	sv := SinhVien{
+		ID:    id,
+		Name:  lineName,
+		Year:  year,
+		Grade: lineGrade,
+	}
+	danhSachSV = append(danhSachSV, sv)
+}
+
 func MenuSinhvien() {
 	reader := bufio.NewReader(os.Stdin)
-	var danhSachSV []SinhVien
 	for {
 		function.ClearScreen()
 
@@ -23,36 +65,12 @@ func MenuSinhvien() {
 		fmt.Println("5. Tìm kiếm sinh viên")
 		fmt.Println("6. Quay lại")
 		fmt.Println("============== Hãy chọn chức năng ====================")
+		fmt.Print("Hãy nhập chức năng:")
 		line, _ := reader.ReadString('\n')
 		line = function.TextInt(line)
 		switch line {
 		case "1":
-			fmt.Print("Hãy nhập Id của sinh viên:")
-			lineId, _ := reader.ReadString('\n')
-			lineId = function.TextInt(lineId)
-
-			fmt.Print("Hãy nhập Tên của sinh viên:")
-			lineName, _ := reader.ReadString('\n')
-			// lineName = function.TextInt(lineName)
-
-			fmt.Print("Hãy nhập Năm của sinh viên:")
-			lineYear, _ := reader.ReadString('\n')
-			lineYear = function.TextInt(lineYear)
-
-			fmt.Print("Hãy nhập lớp của sinh viên:")
-			lineGrade, _ := reader.ReadString('\n')
-			// lineGrade = function.TextInt(lineGrade)
-
-			id, _ := strconv.Atoi(lineId)
-			year, _ := strconv.Atoi(lineYear)
-
-			sv := SinhVien{
-				ID:    id,
-				Name:  lineName,
-				Year:  year,
-				Grade: lineGrade,
-			}
-			danhSachSV = append(danhSachSV, sv)
+			AddSinhVien()
 		case "2":
 		case "3":
 		case "4":
@@ -73,9 +91,7 @@ func MenuSinhvien() {
 		}
 	}
 }
-func AddSinhVien() {
 
-}
 func DeleteSinhVien() {
 
 }

@@ -20,7 +20,7 @@ func NormalizeInput(value interface{}) string {
 // hàm nhận kiểu dữ liệu string và trả về kiểu dữ liệu string
 func EraseSpace(value string) string {
 	str := NormalizeInput(value)
-	// Hàm strings.ReplaceAll thay tất cả chuỗi con trong một chuổi
+	// Hàm strings.ReplaceAll thay tất cả chuỗi con trong một chuỗi
 	// trong trường hợp này thay tất cả khoảng trắng " " thành ""
 	str = strings.ReplaceAll(str, " ", "")
 	return str
@@ -37,6 +37,30 @@ func TextInt(value string) string {
 		}
 	}
 	return value
+}
+
+// Hàm kiểm tra có phải là chữ không
+func TextStringName(value string) bool {
+	// Hàm loại bỏ khoảng trắng đầu và cuối của chuỗi
+	value = NormalizeInput(value)
+	// vòng lặp for duyệt từng ký tự
+	// r là rune( ký tự Unicode) dùng để  hỗ kiểm tra Tiếng Việt
+	for _, err := range value {
+		// Nếu ký tự hiện tại là dấu space thì chuyển sang ký tự kế
+		if err == ' ' {
+			continue
+		}
+		// Nếu ký tự thuốc số hoặc ký tự đặc biệt về false
+		if !unicode.IsLetter(err) {
+			// fmt.Println("Tên không hợp lệ")
+			return false
+		}
+	}
+	// len(value) trả về độ dài của chuỗi
+	// nếu chuối lớn hơn 0 và do kiểu dữ liệu trả về là bool
+	// nên return sẽ là true
+	// Kết hợp giữa việc xét chuỗi phải lớn hơn 0 và trả về true
+	return len(value) > 0
 }
 
 // Hàm clear màn hình nhằm khi switch case
