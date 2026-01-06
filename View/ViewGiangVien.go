@@ -1,4 +1,4 @@
-package giangvien
+package view
 
 import (
 	"bufio"
@@ -6,14 +6,15 @@ import (
 	"os"
 	"strconv"
 
-	function "gapp.go/Function"
+	Controller "gapp.go/Controller"
+	Model "gapp.go/Model"
 )
 
 func MenuGiangvien() {
 	reader := bufio.NewReader(os.Stdin)
-	var danhSachGV []giangvien
+	var danhSachGV []Model.GiangVien
 	for {
-		function.ClearScreen()
+		Controller.ClearScreen()
 		fmt.Println("**** Quản lý giảng viên ****")
 		fmt.Println("1. Thêm giảng viên")
 		fmt.Println("2. Xóa giảng viên")
@@ -23,24 +24,24 @@ func MenuGiangvien() {
 		fmt.Println("6. Quay lại")
 		fmt.Println("============== Hãy chọn chức năng ====================")
 		line, _ := reader.ReadString('\n')
-		line = function.TextInt(line)
+		line = Controller.TextInt(line)
 		switch line {
 		case "1":
 			fmt.Print("Hãy nhập Id của giảng viên:")
 			lineId, _ := reader.ReadString('\n')
-			lineId = function.TextInt(lineId)
+			lineId = Controller.TextInt(lineId)
 
 			fmt.Print("Hãy nhập Tên của giảng viên:")
 			lineName, _ := reader.ReadString('\n')
-			// lineName = function.TextInt(lineName)
+			// lineName = Controller.TextInt(lineName)
 
 			fmt.Print("Hãy nhập lớp của giảng viên:")
 			lineGrade, _ := reader.ReadString('\n')
-			// lineGrade = function.TextInt(lineGrade)
+			// lineGrade = Controller.TextInt(lineGrade)
 
 			id, _ := strconv.Atoi(lineId)
 
-			sv := giangvien{
+			sv := Model.GiangVien{
 				ID:    id,
 				Name:  lineName,
 				Grade: lineGrade,
@@ -63,20 +64,5 @@ func MenuGiangvien() {
 			fmt.Println("Hãy nhập lại dữ liệu")
 		}
 	}
-
-}
-func AddGiangVien() {
-
-}
-func DeleteGiangVien() {
-
-}
-func EditGiangVien() {
-
-}
-func ViewGiangVien() {
-
-}
-func FindGiangVien() {
 
 }

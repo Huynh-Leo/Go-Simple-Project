@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"os"
 
-	function "gapp.go/Function"
-	giangvien "gapp.go/Giangvien"
-	sinhvien "gapp.go/sinhvien"
+	Controller "gapp.go/Controller"
+	View "gapp.go/View"
 )
 
 func main() {
 
 MenuBandau:
 	for {
-		function.ClearScreen()
+		Controller.ClearScreen()
 		// Tạo bộ đọc dữ liệu nhập
 		reader := bufio.NewReader(os.Stdin)
 
@@ -26,12 +25,13 @@ MenuBandau:
 		// bufio.NewReader nhằm đọc hết cả dòng cho đến khi kết thúc bằng Enter
 		fmt.Print("Hãy nhập chức năng:")
 		line, _ := reader.ReadString('\n')
-		line = function.TextInt(line)
+		line = Controller.TextInt(line)
 		switch line {
 		case "1":
-			sinhvien.MenuSinhvien()
+			// sinhvien.MenuSinhvien()
+			View.MenuSinhvien()
 		case "2":
-			giangvien.MenuGiangvien()
+			View.MenuGiangvien()
 		case "3":
 			break MenuBandau
 		}

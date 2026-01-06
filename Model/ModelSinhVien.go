@@ -1,4 +1,4 @@
-package sinhvien
+package model
 
 type SinhVien struct {
 	ID    int    `json:"id"`
