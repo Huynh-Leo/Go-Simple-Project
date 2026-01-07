@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -36,12 +37,26 @@ func TextInt(value string) string {
 	value = EraseSpace(value) // gán kết quả của hàm vào value
 	// Kiểm tra trong chuỗi chỉ được có số
 	for _, num := range value {
-		if !unicode.IsDigit(num) || num == 0 {
+		if !unicode.IsDigit(num) || num <= 0 {
 			fmt.Println("Dữ liệu không hợp lệ")
 			return ""
 		}
 	}
 	return value
+}
+
+/*
+Vì biến TextInt trả về là value
+nên sẽ tạo thêm 1 phương thức tương tự TextInt nhưng trả về bool
+*/
+func TextIntBool(value string) bool {
+	value = EraseSpace(value)
+	for _, num := range value {
+		if !unicode.IsDigit(num) || num <= 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // Hàm kiểm tra có phải là chữ không
@@ -70,14 +85,29 @@ func TextStringName(value string) bool {
 
 // Hàm kiểm tra ID đầu vào
 func TextIntId(danhSachSV []Model.SinhVien, Id string) bool {
-	Id = TextInt(Id)
-	id, _ := strconv.Atoi(Id)
-	for _, sv := range danhSachSV {
-		if sv.ID == id {
-			return false // nếu trùng id thì trả về false
+	if TextIntBool(Id) {
+		id, _ := strconv.Atoi(Id)
+		for _, sv := range danhSachSV {
+			if sv.ID == id {
+				return false // nếu trùng id thì trả về false
+			}
 		}
+		return true // không trùng id nào thì trả về true
 	}
-	return true // không trùng id nào thì trả về true
+	/* Nếu dữ liệu nhập khi qua TextIntBool(Id)
+	không đạt điều kiện thì sẽ return false */
+	return false
+}
+
+// Hàm kiểm tra năm nhập vào
+func TextIntYear(Year string) bool {
+	Year = TextInt(Year)
+	/*
+		Điều kiện chung giá trị nhập vào chỉ được 4 chữ số
+		điều kiện nếu số đầu là chỉ được 19 hoặc 20
+	*/
+	re := regexp.MustCompile(`^(19\d{2}|20\d{2})$`)
+	return re.MatchString(Year)
 }
 
 /*

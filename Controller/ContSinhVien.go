@@ -46,15 +46,23 @@ func AddSinhVien() {
 		fmt.Println("❌ Tên không hợp lệ, vui lòng nhập lại!")
 	}
 
-	fmt.Print("Hãy nhập Năm của sinh viên:")
-	lineYear, _ := reader.ReadString('\n')
-	// lineYear = TextStringName(lineYear)
-
+	var lineYear string
+	for {
+		fmt.Print("Hãy nhập Năm của sinh viên:")
+		lineYear, _ := reader.ReadString('\n')
+		if TextIntYear(lineYear) {
+			break
+		}
+		// lineYear = TextStringName(lineYear)
+		fmt.Println("❌ Năm không hợp lệ, vui lòng nhập lại!")
+	}
+	// Convert từ string sang lại int
+	lineYear = NormalizeInput(lineYear)
+	fmt.Println("LineYear", lineYear)
+	year, _ := strconv.Atoi(lineYear)
+	fmt.Println("Year", year)
 	fmt.Print("Hãy nhập lớp của sinh viên:")
 	lineGrade, _ := reader.ReadString('\n')
-
-	// Convert từ string sang lại int
-	year, _ := strconv.Atoi(lineYear)
 
 	sv := Model.SinhVien{
 		ID:    id,
