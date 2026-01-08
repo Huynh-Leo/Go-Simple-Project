@@ -17,6 +17,11 @@ func AddSinhVien() {
 	var lineId string
 	for {
 		fmt.Print("Hãy nhập Id của sinh viên:")
+		/*
+			CHỈ ĐƯỢC GÁN GIÁ TRỊ =
+			KHÔNG KHAI BÁO VÀ GÀN GIÁ TRỊ :=
+			SẼ LÀM CHO BIẾN BÊN NGOÀI VÒNG LÒNG = ""
+		*/
 		lineId, _ = reader.ReadString('\n')
 		if !TextIntId(danhSachSV, lineId) {
 			fmt.Println("ID không được trùng với ID có trong dữ liệu")
@@ -49,20 +54,26 @@ func AddSinhVien() {
 	var lineYear string
 	for {
 		fmt.Print("Hãy nhập Năm của sinh viên:")
-		lineYear, _ := reader.ReadString('\n')
-		if TextIntYear(lineYear) {
+		lineYear, _ = reader.ReadString('\n')
+		if TextIntYear(NormalizeInput(lineYear)) {
 			break
 		}
-		// lineYear = TextStringName(lineYear)
 		fmt.Println("❌ Năm không hợp lệ, vui lòng nhập lại!")
+		continue
 	}
-	// Convert từ string sang lại int
 	lineYear = NormalizeInput(lineYear)
-	fmt.Println("LineYear", lineYear)
 	year, _ := strconv.Atoi(lineYear)
-	fmt.Println("Year", year)
-	fmt.Print("Hãy nhập lớp của sinh viên:")
-	lineGrade, _ := reader.ReadString('\n')
+
+	var lineGrade string
+	for {
+		fmt.Print("Hãy nhập lớp của sinh viên:")
+		lineGrade, _ = reader.ReadString('\n')
+		if TextStringClass(NormalizeInput(lineGrade)) {
+			break
+		}
+		fmt.Println("❌ Lớp không hợp lệ, vui lòng nhập lại!")
+		continue
+	}
 
 	sv := Model.SinhVien{
 		ID:    id,

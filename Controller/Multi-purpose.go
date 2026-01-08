@@ -32,6 +32,15 @@ func EraseSpace(value string) string {
 	return str
 }
 
+// Hàm kiểm tra có khoảng trắng ở giữa không
+func CheckSpaceBet(value string) bool {
+	str := NormalizeInput(value)
+	if strings.Contains(str, " ") {
+		return false
+	}
+	return true
+}
+
 // Hàm kiểm tra có phải là số nguyên không
 func TextInt(value string) string {
 	value = EraseSpace(value) // gán kết quả của hàm vào value
@@ -85,7 +94,7 @@ func TextStringName(value string) bool {
 
 // Hàm kiểm tra ID đầu vào
 func TextIntId(danhSachSV []Model.SinhVien, Id string) bool {
-	if TextIntBool(Id) {
+	if TextIntBool(Id) && CheckSpaceBet(Id) {
 		id, _ := strconv.Atoi(Id)
 		for _, sv := range danhSachSV {
 			if sv.ID == id {
@@ -96,18 +105,36 @@ func TextIntId(danhSachSV []Model.SinhVien, Id string) bool {
 	}
 	/* Nếu dữ liệu nhập khi qua TextIntBool(Id)
 	không đạt điều kiện thì sẽ return false */
+	fmt.Println("ID chỉ được nhập số nguyên")
 	return false
 }
 
 // Hàm kiểm tra năm nhập vào
-func TextIntYear(Year string) bool {
-	Year = TextInt(Year)
+func TextIntYear(year string) bool {
+	if !TextIntBool(year) {
+		return false
+	}
 	/*
 		Điều kiện chung giá trị nhập vào chỉ được 4 chữ số
 		điều kiện nếu số đầu là chỉ được 19 hoặc 20
 	*/
 	re := regexp.MustCompile(`^(19\d{2}|20\d{2})$`)
-	return re.MatchString(Year)
+	ok := re.MatchString(year)
+	return ok
+}
+
+func TextStringClass(Class string) bool {
+	/*
+		Chỉ được nhập 3 hoặc 4 ký tự
+		Nếu 3 ký tự: số(1->9) + chữ(A->Z) + số(1->9)
+		Nếu 4 ký tự: số (10->12) + chữ(A->Z) + số(1->9)
+	*/
+	if !CheckSpaceBet(Class) {
+		return false
+	}
+	re := regexp.MustCompile(`^(?:(?:10|11|12)[A-Z][1-9]|[1-9][a-zA-Z][1-9])$`)
+	varible := re.MatchString(Class)
+	return varible
 }
 
 /*
