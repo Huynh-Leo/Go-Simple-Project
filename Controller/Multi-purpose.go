@@ -93,7 +93,7 @@ func TextStringName(value string) bool {
 }
 
 // Hàm kiểm tra ID đầu vào
-func TextIntId(danhSachSV []Model.SinhVien, Id string) bool {
+func TextIntIdSV(danhSachSV []Model.SinhVien, Id string) bool {
 	if TextIntBool(Id) && CheckSpaceBet(Id) {
 		id, _ := strconv.Atoi(Id)
 		for _, sv := range danhSachSV {
@@ -105,6 +105,20 @@ func TextIntId(danhSachSV []Model.SinhVien, Id string) bool {
 	}
 	/* Nếu dữ liệu nhập khi qua TextIntBool(Id)
 	không đạt điều kiện thì sẽ return false */
+	fmt.Println("ID chỉ được nhập số nguyên")
+	return false
+}
+
+func TextIntIdGV(danhSachGV []Model.GiangVien, Id string) bool {
+	if TextIntBool(Id) && CheckSpaceBet(Id) {
+		id, _ := strconv.Atoi(Id)
+		for _, sv := range danhSachGV {
+			if sv.ID == id {
+				return false
+			}
+		}
+		return true
+	}
 	fmt.Println("ID chỉ được nhập số nguyên")
 	return false
 }
@@ -132,7 +146,7 @@ func TextStringClass(Class string) bool {
 	if !CheckSpaceBet(Class) {
 		return false
 	}
-	re := regexp.MustCompile(`^(?:(?:10|11|12)[A-Z][1-9]|[1-9][a-zA-Z][1-9])$`)
+	re := regexp.MustCompile(`^(?:(?:10|11|12)[a-zA-Z][1-9]|[1-9][a-zA-Z][1-9])$`)
 	varible := re.MatchString(Class)
 	return varible
 }

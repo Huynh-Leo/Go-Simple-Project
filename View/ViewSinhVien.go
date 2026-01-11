@@ -6,6 +6,7 @@ import (
 	"os"
 
 	Controller "gapp.go/Controller"
+	controller "gapp.go/Controller"
 )
 
 func MenuSinhvien() {
@@ -28,10 +29,13 @@ func MenuSinhvien() {
 		case "1":
 			Controller.AddSinhVien()
 		case "2":
+			Controller.DeleteSinhVien()
 		case "3":
+			controller.EditSinhVien()
 		case "4":
 			Controller.ViewSinhVien()
 		case "5":
+			Controller.FindSinhVien()
 		case "6":
 			return
 		default:

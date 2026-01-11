@@ -23,8 +23,11 @@ func AddSinhVien() {
 			SẼ LÀM CHO BIẾN BÊN NGOÀI VÒNG LÒNG = ""
 		*/
 		lineId, _ = reader.ReadString('\n')
-		if !TextIntId(danhSachSV, lineId) {
+		if !TextIntIdSV(danhSachSV, NormalizeInput(lineId)) {
 			fmt.Println("ID không được trùng với ID có trong dữ liệu")
+			continue
+		} else if NormalizeInput(lineId) == "" {
+			fmt.Println("ID không được để trống")
 			continue
 		}
 		break
@@ -86,10 +89,42 @@ func AddSinhVien() {
 }
 
 func DeleteSinhVien() {
+	var valId string
+	reader := bufio.NewReader(os.Stdin)
 
+	idx := 0
+	for {
+		fmt.Println("Hãy nhập ID cần xóa thông tin")
+		valId, _ = reader.ReadString('\n')
+		if TextIntIdSV(danhSachSV, NormalizeInput(valId)) {
+			fmt.Println("ID không tồn tại ")
+			continue
+		}
+		id, _ := strconv.Atoi(NormalizeInput(valId))
+		for _, user := range danhSachSV {
+			if user.ID != id {
+				danhSachSV[idx] = user
+				idx++
+			}
+		}
+		danhSachSV = danhSachSV[:idx]
+		break
+	}
 }
 func EditSinhVien() {
-
+	var valId string
+	reader := bufio.NewReader(os.Stdin)
+	ViewSinhVien()
+	for {
+		fmt.Println("Hãy nhập ID cần chỉnh sửa thông tin")
+		valId, _ = reader.ReadString('\n')
+		if TextIntIdSV(danhSachSV, NormalizeInput(valId)) {
+			fmt.Println("ID không tồn tại ")
+			continue
+		}
+		AddSinhVien()
+		break
+	}
 }
 func ViewSinhVien() {
 	reader := bufio.NewReader(os.Stdin)
@@ -104,5 +139,26 @@ func ViewSinhVien() {
 	reader.ReadString('\n')
 }
 func FindSinhVien() {
+	var valId string
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Println("Hãy nhập ID để tìm kiếm thông tin")
+		valId, _ = reader.ReadString('\n')
+		if TextIntIdSV(danhSachSV, NormalizeInput(valId)) {
+			fmt.Println("ID không tồn tại ")
+			continue
+		}
+		id, _ := strconv.Atoi(NormalizeInput(valId))
+		for _, sv := range danhSachSV {
+			if sv.ID == id {
+				fmt.Println("ID:", sv.ID)
+				fmt.Println("Name:", sv.Name)
+				fmt.Println("Year:", sv.Year)
+				fmt.Println("Grade:", sv.Grade)
+			}
+		}
+		reader.ReadString('\n')
+		break
+	}
 
 }

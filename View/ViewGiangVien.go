@@ -4,15 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 
 	Controller "gapp.go/Controller"
-	Model "gapp.go/Model"
+	controller "gapp.go/Controller"
 )
 
 func MenuGiangvien() {
 	reader := bufio.NewReader(os.Stdin)
-	var danhSachGV []Model.GiangVien
 	for {
 		Controller.ClearScreen()
 		fmt.Println("**** Quản lý giảng viên ****")
@@ -27,37 +25,15 @@ func MenuGiangvien() {
 		line = Controller.TextInt(line)
 		switch line {
 		case "1":
-			fmt.Print("Hãy nhập Id của giảng viên:")
-			lineId, _ := reader.ReadString('\n')
-			lineId = Controller.TextInt(lineId)
-
-			fmt.Print("Hãy nhập Tên của giảng viên:")
-			lineName, _ := reader.ReadString('\n')
-			// lineName = Controller.TextInt(lineName)
-
-			fmt.Print("Hãy nhập lớp của giảng viên:")
-			lineGrade, _ := reader.ReadString('\n')
-			// lineGrade = Controller.TextInt(lineGrade)
-
-			id, _ := strconv.Atoi(lineId)
-
-			sv := Model.GiangVien{
-				ID:    id,
-				Name:  lineName,
-				Grade: lineGrade,
-			}
-			danhSachGV = append(danhSachGV, sv)
+			Controller.AddGiangVien()
 		case "2":
+			Controller.DeleteGiangVien()
 		case "3":
+			controller.EditGiangVien()
 		case "4":
-			for _, sv := range danhSachGV {
-				fmt.Printf(
-					"*ID: %d\n *Name: %s\n *Grade: %s\n",
-					sv.ID, sv.Name, sv.Grade,
-				)
-			}
-			reader.ReadString('\n')
+			Controller.ViewGiangVien()
 		case "5":
+			Controller.FindGiangVien()
 		case "6":
 			return
 		default:
